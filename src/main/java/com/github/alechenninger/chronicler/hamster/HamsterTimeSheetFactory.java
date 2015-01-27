@@ -16,7 +16,6 @@ import java.util.Map;
 
 public class HamsterTimeSheetFactory implements TimeSheetFactory {
   private static final ObjectMapper xmlMapper = new XmlMapper();
-
   private static final ObjectMapper jsonMapper = new ObjectMapper();
 
   @Override
