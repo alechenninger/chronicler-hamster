@@ -22,6 +22,7 @@ public class HamsterTimeSheet implements TimeSheet {
   @Override
   public List<TimeEntry> getEntries() {
     return activities.stream()
+        .filter(a -> categoryMap.containsKey(a.getCategory()))
         .map(a -> new TimeEntry(categoryMap.get(a.getCategory()), a.getStartTime(),
             (float) a.getDurationInMinutes() / 60f))
         .collect(Collectors.toList());
