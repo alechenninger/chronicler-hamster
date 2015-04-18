@@ -61,7 +61,7 @@ public class HamsterTimeSheetOptions {
 
   public static void printHelpMessage() {
     HelpFormatter help = new HelpFormatter();
-    help.printHelp("java -jar path-to-chronicler.jar --source path-to-chronicler-hamster.jar",
+    help.printHelp("chronicler --source path-to-chronicler-hamster.jar",
         "Use with chronicler to upload hamster reports.",
         OPTIONS,
         "https://github.com/alechenninger/chronicler.git\nhttps://github.com/alechenninger/chronicler-hamster.git",
