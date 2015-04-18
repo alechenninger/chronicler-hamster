@@ -14,10 +14,10 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class HamsterTimeSheetOptions {
-  private static Option REPORT = new Option("r", "report", true,
+  private static Option REPORT = new Option("hr", "report", true,
       "File path for hamster report. Can be relative or absolute. Must also specify a categoryMap.");
 
-  private static final Option CATEGORY_MAP = new Option("c", "categoryMap", true, "JSON file which "
+  private static final Option CATEGORY_MAP = new Option("hc", "categoryMap", true, "JSON file which "
       + "maps Hamster activity categories to Rally projects, work products, and, optionally, tasks,"
       + " by name.");
 
