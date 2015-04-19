@@ -1,7 +1,7 @@
 # chronicler-hamster
 Hamster plugin for [chronicler](https://github.com/alechenninger/chronicler)
 
-# Using
+## Using
 
 Assuming a source plugin path to jar is defined in your chronicler config...
 
