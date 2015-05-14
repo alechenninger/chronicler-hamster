@@ -7,9 +7,13 @@ import com.github.alechenninger.chronicler.TimeSheet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.function.Predicate;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 public class HamsterTimeSheet implements TimeSheet {
+  private static final Logger logger =  Logger.getLogger(HamsterTimeSheet.class.getName());
+
   private final List<Activity> activities;
   private final Map<String, TimeEntryCoordinates> categoryMap;
 
@@ -22,7 +26,7 @@ public class HamsterTimeSheet implements TimeSheet {
   @Override
   public List<TimeEntry> getEntries() {
     return activities.stream()
-        .filter(a -> categoryMap.containsKey(a.getCategory()))
+        .filter(this::hasMappedCategory)
         .map(a -> new TimeEntry(categoryMap.get(a.getCategory()), a.getStartTime(),
             (float) a.getDurationInMinutes() / 60f))
         .collect(Collectors.toList());
@@ -62,5 +66,15 @@ public class HamsterTimeSheet implements TimeSheet {
         "activities=" + activities +
         ", categoryMap=" + categoryMap +
         '}';
+  }
+
+  private boolean hasMappedCategory(Activity activity) {
+    boolean isMapped = categoryMap.containsKey(activity.getCategory());
+
+    if (!isMapped) {
+      logger.warning("Activity found with unmapped category: " + activity);
+    }
+
+    return isMapped;
   }
 }
