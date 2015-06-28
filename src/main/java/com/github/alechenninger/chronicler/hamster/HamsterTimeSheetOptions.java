@@ -59,12 +59,7 @@ public class HamsterTimeSheetOptions {
         + " time sheet entries. Specify one via " + CATEGORY_MAP);
   }
 
-  public static void printHelpMessage() {
-    HelpFormatter help = new HelpFormatter();
-    help.printHelp("chronicler --source path-to-chronicler-hamster.jar",
-        "Use with chronicler to upload hamster reports.",
-        OPTIONS,
-        "https://github.com/alechenninger/chronicler.git\nhttps://github.com/alechenninger/chronicler-hamster.git",
-        true);
+  public static Options getOptions() {
+    return OPTIONS;
   }
 }
