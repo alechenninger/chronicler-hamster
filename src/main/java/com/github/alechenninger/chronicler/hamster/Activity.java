@@ -4,7 +4,11 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.Date;
+import java.util.Objects;
 
 public class Activity {
   private final String category;
@@ -12,8 +16,8 @@ public class Activity {
   private final String name;
   private final String tags;
   private final int durationInMinutes;
-  private final Date startTime;
-  private final Date endTime;
+  private final ZonedDateTime startTime;
+  private final ZonedDateTime endTime;
 
   @JsonCreator
   public Activity(@JsonProperty("category") String category,
@@ -21,17 +25,22 @@ public class Activity {
       @JsonProperty("tags") String tags,
       @JsonProperty("duration_minutes") int durationInMinutes,
       @JsonProperty("end_time")
-      @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss") Date endTime,
+      @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
+      Date endTime,
       @JsonProperty("start_time")
       @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
       Date startTime) {
-    this.category = category;
-    this.description = description;
-    this.name = name;
-    this.tags = tags;
-    this.durationInMinutes = durationInMinutes;
-    this.endTime = endTime;
-    this.startTime = startTime;
+    this.category = Objects.requireNonNull(category, "category");
+    this.description = Objects.requireNonNull(description, "description");
+    this.name = Objects.requireNonNull(name, "name");
+    this.tags = Objects.requireNonNull(tags, "tags");
+    this.durationInMinutes = Objects.requireNonNull(durationInMinutes, "durationInMinutes");
+
+    Objects.requireNonNull(endTime, "endTime");
+    Objects.requireNonNull(startTime, "startTime");
+
+    this.endTime = endTime.toInstant().atZone(ZoneId.systemDefault());
+    this.startTime = startTime.toInstant().atZone(ZoneId.systemDefault());
   }
 
   public String getCategory() {
@@ -54,11 +63,11 @@ public class Activity {
     return durationInMinutes;
   }
 
-  public Date getStartTime() {
+  public ZonedDateTime getStartTime() {
     return startTime;
   }
 
-  public Date getEndTime() {
+  public ZonedDateTime getEndTime() {
     return endTime;
   }
 
@@ -70,45 +79,19 @@ public class Activity {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-
     Activity activity = (Activity) o;
-
-    if (durationInMinutes != activity.durationInMinutes) {
-      return false;
-    }
-    if (category != null ? !category.equals(activity.category) : activity.category != null) {
-      return false;
-    }
-    if (description != null ? !description.equals(activity.description) : activity.description !=
-        null) {
-      return false;
-    }
-    if (endTime != null ? !endTime.equals(activity.endTime) : activity.endTime != null) {
-      return false;
-    }
-    if (name != null ? !name.equals(activity.name) : activity.name != null) {
-      return false;
-    }
-    if (startTime != null ? !startTime.equals(activity.startTime) : activity.startTime != null) {
-      return false;
-    }
-    if (tags != null ? !tags.equals(activity.tags) : activity.tags != null) {
-      return false;
-    }
-
-    return true;
+    return Objects.equals(durationInMinutes, activity.durationInMinutes) &&
+        Objects.equals(category, activity.category) &&
+        Objects.equals(description, activity.description) &&
+        Objects.equals(name, activity.name) &&
+        Objects.equals(tags, activity.tags) &&
+        Objects.equals(startTime, activity.startTime) &&
+        Objects.equals(endTime, activity.endTime);
   }
 
   @Override
   public int hashCode() {
-    int result = category != null ? category.hashCode() : 0;
-    result = 31 * result + (description != null ? description.hashCode() : 0);
-    result = 31 * result + (name != null ? name.hashCode() : 0);
-    result = 31 * result + (tags != null ? tags.hashCode() : 0);
-    result = 31 * result + durationInMinutes;
-    result = 31 * result + (startTime != null ? startTime.hashCode() : 0);
-    result = 31 * result + (endTime != null ? endTime.hashCode() : 0);
-    return result;
+    return Objects.hash(category, description, name, tags, durationInMinutes, startTime, endTime);
   }
 
   @Override

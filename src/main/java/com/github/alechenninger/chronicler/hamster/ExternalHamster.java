@@ -6,17 +6,19 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.file.Path;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAccessor;
 import java.util.List;
+import java.util.TimeZone;
 
 public class ExternalHamster implements Hamster {
-  private static final ObjectMapper xmlMapper = new XmlMapper();
-  private static final DateTimeFormatter TIME_FORMATTER = ofPattern("yyyy-MM-dd HH:mm:ss");
+  private static final ObjectMapper xmlMapper = new XmlMapper()
+      .setTimeZone(TimeZone.getTimeZone(ZoneId.systemDefault()));
+  // TODO: Should be yyyy-MM-dd HH:mm:ss but hamster is buggy
+  private static final DateTimeFormatter TIME_FORMATTER = ofPattern("yyyy-MM-dd");
   private static final String HAMSTER_EXEC_NAME = "hamster";
 
   private final ProcessLauncher processLauncher;
@@ -32,11 +34,6 @@ public class ExternalHamster implements Hamster {
     String endArg = TIME_FORMATTER.format(end);
     Process process = processLauncher.launch(HAMSTER_EXEC_NAME, "export xml", startArg, endArg);
     return deserializeReport(process.getInputStream());
-  }
-
-  @Override
-  public List<Activity> deserializeReport(Path reportPath) throws IOException {
-    return deserializeReport(new FileInputStream(reportPath.toFile()));
   }
 
   @Override

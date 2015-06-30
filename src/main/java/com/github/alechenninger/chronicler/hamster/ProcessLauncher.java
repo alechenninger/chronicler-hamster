@@ -9,6 +9,7 @@ public interface ProcessLauncher {
     @Override
     public Process launch(String command, String... args) throws IOException {
       String execCmd = makeCmd(command, args);
+      System.out.println("Running " + execCmd);
       return Runtime.getRuntime().exec(execCmd);
     }
 
