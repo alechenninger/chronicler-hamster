@@ -27,7 +27,8 @@ public class HamsterPluginInfo implements PluginInfo {
 
   @Override
   public String exampleUsage() {
-    return "chronicler -s chronicler-hamster -hc categories.json -hr report.xml";
+    return "chronicler -s chronicler-hamster.jar -hc categories.json -hr report.xml\n"
+        + "chronicler -s chronicler-hamster.jar -hc categories.json --auto";
   }
 
   @Override

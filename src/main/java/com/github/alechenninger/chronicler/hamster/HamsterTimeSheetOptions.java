@@ -21,9 +21,13 @@ public class HamsterTimeSheetOptions {
       + "maps Hamster activity categories to Rally projects, work products, and, optionally, tasks,"
       + " by name.");
 
+  private static final Option AUTO = new Option("ha", "auto", false, "Instructs the plugin to "
+      + "automatically generate a report since the last updated time sheet entry.");
+
   private static final Options OPTIONS = new Options()
       .addOption(CATEGORY_MAP)
-      .addOption(REPORT);
+      .addOption(REPORT)
+      .addOption(AUTO);
 
   private static final Path DEFAULT_MAP = Paths.get("categories.json");
 
@@ -57,6 +61,14 @@ public class HamsterTimeSheetOptions {
     throw new ChroniclerException("No category map specified, and default (" + DEFAULT_MAP + ") "
         + "not found. A category map is necessary to translate Hamster activity categories to Rally"
         + " time sheet entries. Specify one via " + CATEGORY_MAP);
+  }
+
+  public boolean isReportSpecified() {
+    return cli.hasOption(REPORT.getOpt());
+  }
+
+  public boolean autoGenerateReport() {
+    return cli.hasOption(AUTO.getOpt());
   }
 
   public static Options getOptions() {
