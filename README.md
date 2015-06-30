@@ -26,3 +26,11 @@ And report.xml is an xml time report generated from hamster like...
 ```bash
 hamster export xml 2015-04-01 2015-04-18 > report.xml
 ```
+
+Or if you have time entries already, you can auto generate a report from the date of the last time entry until today:
+
+```bash
+chronicler -hc categories.json -ha
+```
+
+You can add `["-hz", "categories.json", "-ha"]` to sourcePlugin.args in chronicler config.json. Then you can just run "chronicler" with no args.
