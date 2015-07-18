@@ -22,7 +22,7 @@ public class HamsterPluginInfo implements PluginInfo {
 
   @Override
   public String version() {
-    return "3.0.0";
+    return "3.1.2";
   }
 
   @Override

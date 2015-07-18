@@ -12,7 +12,13 @@
 
   <groupId>com.github.alechenninger</groupId>
   <artifactId>chronicler-hamster</artifactId>
-  <version>3.1.1</version>
+  <version>3.1.2-SNAPSHOT</version>
+
+  <scm>
+    <connection>scm:git:https://github.com/alechenninger/chronicler-hamster.git</connection>
+    <developerConnection>scm:git:git@github.com:alechenninger/chronicler-hamster.git</developerConnection>
+    <url>https://github.com/alechenninger/chronicler-hamster</url>
+  </scm>
 
   <build>
     <plugins>
