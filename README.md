@@ -33,4 +33,4 @@ Or if you have time entries already, you can auto generate a report from the dat
 chronicler -hc categories.json -ha
 ```
 
-You can add `["-hz", "categories.json", "-ha"]` to sourcePlugin.args in chronicler config.json. Then you can just run "chronicler" with no args.
+You can add `["-hc", "categories.json", "-ha"]` to sourcePlugin.args in chronicler config.json. Then you can just run "chronicler" with no args.
