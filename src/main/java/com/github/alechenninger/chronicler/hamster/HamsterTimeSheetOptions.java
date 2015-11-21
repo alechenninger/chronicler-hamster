@@ -14,6 +14,8 @@ import org.apache.commons.cli.ParseException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.Clock;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAccessor;
@@ -88,11 +90,11 @@ public class HamsterTimeSheetOptions {
   }
 
   public TimeRange timeRange() {
-    ZonedDateTime startDate = TIME_FORMATTER.parse(cli.getOptionValue(START_DATE.getOpt()),
-        ZonedDateTime::from);
-    ZonedDateTime endDate = cli.hasOption(END_DATE.getOpt())
-        ? TIME_FORMATTER.parse(cli.getOptionValue(END_DATE.getOpt()), ZonedDateTime::from)
-        : ZonedDateTime.now(clock);
+    LocalDate startDate = TIME_FORMATTER.parse(cli.getOptionValue(START_DATE.getOpt()),
+        LocalDate::from);
+    LocalDate endDate = cli.hasOption(END_DATE.getOpt())
+        ? TIME_FORMATTER.parse(cli.getOptionValue(END_DATE.getOpt()), LocalDate::from)
+        : LocalDate.now(clock);
 
     return new TimeRange(startDate, endDate);
   }
