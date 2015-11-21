@@ -14,12 +14,12 @@ import org.apache.commons.cli.ParseException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.Clock;
-import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAccessor;
 
 public class HamsterTimeSheetOptions {
-  private static final DateTimeFormatter TIME_FORMATTER = ofPattern("yyyy-MM-dd");
+  private static final String TIME_PATTERN = "yyyy-MM-dd";
+  private static final DateTimeFormatter TIME_FORMATTER = ofPattern(TIME_PATTERN);
 
   private static Option REPORT = new Option("hr", "report", true,
       "File path for hamster report. Can be relative or absolute. Must also specify a categoryMap.");
@@ -32,10 +32,10 @@ public class HamsterTimeSheetOptions {
       + "automatically generate a report since the last updated time sheet entry.");
 
   private static final Option START_DATE = new Option("hs", "startDate", true, "Date to start "
-      + "report generation (" + TIME_FORMATTER + ")");
+      + "report generation (" + TIME_PATTERN + ")");
 
   private static final Option END_DATE = new Option("he", "endDate", true, "Date to end "
-      + "report generation (" + TIME_FORMATTER + ")");
+      + "report generation (" + TIME_PATTERN + ")");
 
   private static final Options OPTIONS = new Options()
       .addOption(CATEGORY_MAP)
