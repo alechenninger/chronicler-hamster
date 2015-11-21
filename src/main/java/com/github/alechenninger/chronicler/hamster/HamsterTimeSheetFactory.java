@@ -1,6 +1,7 @@
 package com.github.alechenninger.chronicler.hamster;
 
 import com.github.alechenninger.chronicler.ChroniclerException;
+import com.github.alechenninger.chronicler.Foo;
 import com.github.alechenninger.chronicler.TimeEntryCoordinates;
 import com.github.alechenninger.chronicler.TimeSheet;
 import com.github.alechenninger.chronicler.TimeSheetFactory;
@@ -43,7 +44,7 @@ public class HamsterTimeSheetFactory implements TimeSheetFactory {
 
   private TimeSheet getTimeSheet(String[] additionalArgs, Optional<ZonedDateTime> lastRecordedEntryTime) {
     try {
-      HamsterTimeSheetOptions options = new HamsterTimeSheetOptions(additionalArgs);
+      HamsterTimeSheetOptions options = new HamsterTimeSheetOptions(additionalArgs, clock);
       Map<String, TimeEntryCoordinates> categoryMap = deserializeCategoryMap(options.categoryMap());
       List<Activity> activities = getActivities(options, lastRecordedEntryTime);
 
@@ -59,14 +60,18 @@ public class HamsterTimeSheetFactory implements TimeSheetFactory {
       return hamster.deserializeReport(options.report());
     }
 
-    if (!options.autoGenerateReport()) {
+    if (!options.autoGenerateReport() && !options.isTimeRangeSpecified()) {
       throw new ChroniclerException("Please specify a report or ask for one to be auto generated.");
     }
 
-    if (!lastRecordedEntryTime.isPresent()) {
+    if (!lastRecordedEntryTime.isPresent() && !options.isTimeRangeSpecified()) {
       throw new ChroniclerException("Looks like you asked for a report to be generated, but have "
           + "no previously recorded time entries. Rather than trying to generate a report from "
-          + "the beginning of time, please provide a manually generated report.");
+          + "the beginning of time, please provide a manually generated report or a start date.");
+    }
+
+    if (options.isTimeRangeSpecified()) {
+      return hamster.exportReport(options.timeRange());
     }
 
     TemporalAccessor start = lastRecordedEntryTime.get().withZoneSameInstant(ZoneId.systemDefault());
@@ -80,11 +85,5 @@ public class HamsterTimeSheetFactory implements TimeSheetFactory {
     return jsonMapper.readValue(
         categoryMapPath.toFile(),
         new TypeReference<Map<String, TimeEntryCoordinates>>() {});
-  }
-
-  public static void main(String[] args) {
-    new HamsterTimeSheetFactory(new ExternalHamster(new ProcessLauncher.RuntimeProcessLauncher()), Clock.systemDefaultZone())
-        .getTimeSheet(new String[]{"-hc", "categories.json", "-ha"}, ZonedDateTime.now().minus(5,
-            ChronoUnit.DAYS));
   }
 }
