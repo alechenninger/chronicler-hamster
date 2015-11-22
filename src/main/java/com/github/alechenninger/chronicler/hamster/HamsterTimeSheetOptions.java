@@ -15,10 +15,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.Clock;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.TemporalAccessor;
 
 public class HamsterTimeSheetOptions {
   private static final String TIME_PATTERN = "yyyy-MM-dd";

@@ -1,7 +1,6 @@
 package com.github.alechenninger.chronicler.hamster;
 
 import com.github.alechenninger.chronicler.ChroniclerException;
-import com.github.alechenninger.chronicler.Foo;
 import com.github.alechenninger.chronicler.TimeEntryCoordinates;
 import com.github.alechenninger.chronicler.TimeSheet;
 import com.github.alechenninger.chronicler.TimeSheetFactory;
@@ -15,7 +14,6 @@ import java.nio.file.Path;
 import java.time.Clock;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
-import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalAccessor;
 import java.util.List;
 import java.util.Map;
