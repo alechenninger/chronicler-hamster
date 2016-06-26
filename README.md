@@ -1,5 +1,5 @@
 # chronicler-hamster
-Hamster plugin for [chronicler](https://github.com/alechenninger/chronicler)
+[Hamster](https://github.com/projecthamster/hamster) plugin for [chronicler](https://github.com/alechenninger/chronicler)
 
 ## Using
 
