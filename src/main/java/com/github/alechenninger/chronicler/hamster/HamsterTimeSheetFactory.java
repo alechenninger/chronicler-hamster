@@ -31,13 +31,13 @@ public class HamsterTimeSheetFactory implements TimeSheetFactory {
   }
 
   @Override
-  public TimeSheet getTimeSheet(String[] additionalArgs) {
-    return getTimeSheet(additionalArgs, Optional.empty());
+  public TimeSheet getTimeSheet(String[] args) {
+    return getTimeSheet(args, Optional.empty());
   }
 
   @Override
-  public TimeSheet getTimeSheet(String[] additionalArgs, ZonedDateTime lastRecordedEntryTime) {
-    return getTimeSheet(additionalArgs, Optional.of(lastRecordedEntryTime));
+  public TimeSheet getTimeSheet(String[] args, ZonedDateTime lastRecordedEntryTime) {
+    return getTimeSheet(args, Optional.of(lastRecordedEntryTime));
   }
 
   private TimeSheet getTimeSheet(String[] additionalArgs, Optional<ZonedDateTime> lastRecordedEntryTime) {
